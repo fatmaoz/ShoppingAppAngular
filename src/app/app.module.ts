@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/shop.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ShopComponent } from './shop/shop.component';
   imports: [
     BrowserModule,
     ShopModule,
+    FormsModule,
     RouterModule.forRoot([
        { path: 'shop', component: ShopComponent },
        { path: 'cart', component: CartDetailComponent },
