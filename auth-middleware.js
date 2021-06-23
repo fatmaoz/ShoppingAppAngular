@@ -6,6 +6,8 @@ const password = "secret";
 
 module.exports = function (req, res, next) {
 
+  console.log("Hello");
+  console.log(req.url);
     if (req.url === '/login' && req.method == 'POST') {
         if (req.body.username == username && req.body.password == password) {
             let token = jwt.sign({ data: username, expiresIn: '1h' }, app_secret);
@@ -16,21 +18,23 @@ module.exports = function (req, res, next) {
         res.end();
         return;
     } else {
-        if ((req.url.startsWith("/products") || req.url.startsWith("/categories")) && (req.method != 'GET')) {
+        if ((req.url.startsWith("/products") || req.url.startsWith("/categories") ) && (req.method != 'GET')) {
             let token = req.headers['authorization'];
-
+            console.log('token: ' + token);
             if (token != null && token.startsWith('Bearer<')) {
-                token = token.substring(7, token.length);
+            let token = jwt.sign({ data: username, expiresIn: '1h' }, app_secret);
+            token = token.substring(7, token.length-1);
                 try {
                     jwt.verify(token, app_secret);
                     next();
                     return;
                 }
                 catch (err) { }
-            }
+            }else{
             res.statusCode = 401;
             res.end();
             return;
+            }
         }
     }
     next();
